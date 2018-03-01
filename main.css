@@ -1,0 +1,366 @@
+* {
+    box-sizing: border-box;
+}
+
+#chinese{
+	font-family: Arial, Helvetica, tahoma, verdana, 宋体, SimSun, 华文细黑, STXihei, sans-serif;
+	font-size: 20px;
+	line-height: 1.5;
+    letter-spacing: 5px;
+}
+
+body{
+	background: white;
+	font-family: "Courier New", Courier, monospace;
+	margin: 0;
+	padding: 0;
+
+}
+/* For mobile phone */
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+	background: #999; 
+	padding: 40px 0px 10px 0px;
+}
+
+header h1{
+	background: black;
+    color: white;
+	padding: 1px 5px 1px 10px;
+	font-family: 'Bungee Hairline',Helvetica, monospace;
+	font-size: 15px;
+	letter-spacing: 8px;
+	display: inline-block;
+	margin: 0px 10px;
+}
+
+.menuIcon{
+    float: right;
+    cursor: pointer;
+}
+.menuIcon div{
+    width: 30px;
+    height: 3px;
+    background-color: black;
+    margin: 0px 20px 5px 0px;
+}
+
+.menuIcon:hover div{
+    background-color: white;
+}
+
+/* The Full Sreen Overlay Menu*/
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 0;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s;
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+p{
+	font-family: "Courier New", Courier, monospace;
+	color: #666;
+    font-size: 13px;
+	letter-spacing: 1px;
+	margin: 86px 20px 10px 10px;
+	line-height: 1.8;
+	text-align: justify;
+}
+
+
+#icon-bar {
+	display: none;
+}
+
+
+.Main-Gallery{
+	height: 1000px;
+	margin: 20px 0px;
+}
+
+.Main-Gallery:after{
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.Main-Gallery p{
+	float: left;
+	position: absolute;
+	top:400px;
+	left: 60%;
+	z-index: 1;
+	font-size: 12px;
+	color: black;
+}
+
+.box{
+  position: relative;
+  float: left;
+  width: 120px;
+  height: 120px;
+}
+
+.onPhone{display: block;}
+.onPad{display: none;}
+.onPC{display: none;}
+
+/*box color*/
+#blue{background: #4bf9f6;}
+#red{background: #ff4f80;}
+#darkred{background: #e02a64;}
+#yollow{background: #ffdf14;}
+
+.text{
+	font-size: 12px;
+	letter-spacing: 3px;
+	text-transform: uppercase;
+	opacity: 1;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+	
+}
+
+.box #chinese{
+	font-size: 18px;
+}
+
+#yollow .text{color: #492e00;}
+#red .text, #darkred .text{color: #fcbe55;}
+#blue .text{color: #664000;}
+
+.image{
+	opacity: 0;
+	display: block;
+	width: 100%;
+	height: auto;
+	backface-visibility: hidden;
+}
+
+
+.image:hover{
+	opacity: 1;
+	cursor: pointer; /* Add a pointer on hover */
+}
+
+.box:hover .text{
+	display: none;
+}
+
+
+.line{
+	float: left;
+	height: 30px;
+	background: black;
+	width: 100%;
+	position: relative;
+	padding-bottom: 10px;
+}
+
+/* for tablet */
+@media (min-width: 600px){
+	header{
+        position: absolute;
+	   padding: 80px 0px 10px 0px;
+    }
+    
+    header h1{
+        font-size: 18px;
+    }
+    
+    .menuIcon{
+        display: none;
+    }
+    
+    p {
+        font-size: 16px;
+        width: 70%;
+        margin-top: 130px;
+    }
+    
+    #icon-bar {
+        position: fixed;
+        top:100px;
+        right:20px;
+        z-index: 1;
+        float: right;
+        width: 100px;
+        display: block;
+    }
+    
+    #icon-bar a{
+        display: block;
+        float: right;
+        margin: 0px 0px;
+        background-color: black;
+        border: none;
+        color: white;
+        padding: 7px 15px 7px 25px;
+        text-align: center;
+        text-decoration: none;
+        letter-spacing: 2px;
+        font-size: 14px;
+
+    }
+
+    #icon-bar a:hover {
+        background-color: #ffdf14;
+        color: black;
+        padding-left: 100px;
+    }
+
+    #icon-bar #active{
+        background-color: #555;
+        color: white;
+        padding: 7px 15px 7px 25px;
+    }
+    
+    .Main-Gallery{
+        margin: 70px 0px 100px 10px;
+    }
+    
+    .box{
+      width: 150px;
+      height: 150px;
+    }
+    
+    .onPhone{display: none;}
+    .onPad{display: block;}
+    .onPC{display: none;}
+    .bigSreen{display: none;}
+    
+    .text{
+        font-size: 15px;
+    }
+    .box #chinese{
+	   font-size: 21px;
+    }
+
+}
+
+/* for desktop */
+@media (min-width: 900px){
+    
+    .Main-Gallery{
+        max-width: 1024px;
+    }
+    
+    .onPhone{display: none;}
+    .onPad{display: none;}
+    .onPC{display: block;}
+    .bigSreen{display: none;}
+    
+    
+}
+
+
+
+/* Pop Up Window of Art works */ 
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 8% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #888;
+    float: right;
+    font-size: 50px;
+    font-weight: lighter;
+    border: 1px solid #ffdf14;
+    line-height: 0.7;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+footer{
+	clear: both;
+	float: left;
+	background: black;
+	color: white;
+	padding: 5px 25px;
+	letter-spacing: 2px;
+	font-size: 13px;
+}

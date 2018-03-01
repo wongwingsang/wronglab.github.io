@@ -1,0 +1,34 @@
+
+.caption{
+	margin: 0px 0px 15px 0px;
+	width: 90%;
+}
+
+.caption h2{
+	padding: 3px 20px;
+	letter-spacing: 8px;
+	font-family: Arial, Helvetica, tahoma, verdana, 宋体, SimSun, 华文细黑, STXihei, sans-serif;
+	font-size: 20px;
+	display: inline-block;
+	margin: 0px 0px 10px 0px;
+	border: 1px solid black ; 
+}
+
+.caption h5{
+	display:inline-block;
+	color: white;
+	background-color: black;
+	padding: 0px 10px;
+	font-family: 'Bungee Hairline';
+	font-size: 18px;
+	letter-spacing: 8px;
+	margin: 0px 0px;
+}
+
+.modal-content p{
+	
+	display: inline-block;
+	margin: 40px 0px;
+	width: 80%;
+
+}
