@@ -11,12 +11,12 @@
 		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
 		crossorigin=""></script>
 	<style>
-		body{
+		body,p{
 			padding: 1%;
 			margin: 0;
 		}
 		html, body, #map{
- 	   		height: 60vh;
+ 	   		height: 70vh;
     		width: 80vw;
 		}
 	</style>
@@ -35,13 +35,41 @@
 
 	<script>
 		// setup the map
-		const mymap = L.map('map',{center:[0,0],zoom: 2});
-		const marker = L.marker([0, 0]).addTo(mymap);
+		const mymap = L.map('map',{center:[22.40000, 114.13000],zoom: 11});
+		
+		var pikachuIcon = L.icon({
+			iconUrl: 'imges/pikachu.png',
+			iconSize:     [30, 30], // size of the icon
+			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
+			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var psyduckIcon = L.icon({
+			iconUrl: 'imges/psyduck.png',
+			iconSize:     [30, 30], // size of the icon
+			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
+			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var charmanderIcon = L.icon({
+			iconUrl: 'imges/charmander.png',
+			iconSize:     [30, 30], // size of the icon
+			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
+			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var snorlaxIcon = L.icon({
+			iconUrl: 'imges/snorlax.png',
+			iconSize:     [30, 30], // size of the icon
+			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
+			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
 
+		const user = L.marker([22.40000, 114.13000],{icon: pikachuIcon}).addTo(mymap);
+		
+
+		//https://api.mapbox.com/styles/v1/sunnywongws/cl3dxr94u000p14o2ywsmaj7t/wmts?access_token=pk.eyJ1Ijoic3Vubnl3b25nd3MiLCJhIjoiY2wzZHMxNXFrMDN2OTNibWszaWp4MWx2MiJ9.6avIlC_w3PH1x5OIzjyn9A
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-			maxZoom: 18,
-			id: 'mapbox/streets-v11',
+			maxZoom: 19,
+			id: 'sunnywongws/cl3dxr94u000p14o2ywsmaj7t',
 			tileSize: 512,
 			zoomOffset: -1,
 			accessToken: 'pk.eyJ1Ijoic3Vubnl3b25nd3MiLCJhIjoiY2wzZHM3ejZwMGJqNDNtcHJzbjg3enRkNCJ9.xxoXiVlJOXyoSr1QFQ0gFg'
@@ -56,13 +84,16 @@
 			const longitude = position.coords.longitude;
 			const heading = position.coords.heading;
 
-			status.textContent = 'location fund: ';
+			status.textContent = '';
 			// mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
 			mapLink.href = `https://www.google.com/maps/place/${latitude},${longitude}`;
 			mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
 
-			marker.setLatLng([latitude, longitude]);
-			mymap.setView([latitude, longitude], 18);
+			user.setLatLng([latitude, longitude]);
+			mymap.setView([latitude, longitude], 19);
+			const psyduck = L.marker([22.36175, 114.13281],{icon: psyduckIcon}).addTo(mymap);
+			const charmander = L.marker([22.3626, 114.13344],{icon: charmanderIcon}).addTo(mymap);
+			const snorlax = L.marker([22.36339, 114.13224],{icon: snorlaxIcon}).addTo(mymap);
 
 			}
 
