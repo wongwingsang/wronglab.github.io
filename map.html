@@ -29,15 +29,14 @@
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
 	<p id = "status"></p>
-	<p id = "heading"></p>
 	<a id = "map-link" target="_blank"></a><br/>
 	<div id="map"></div>
 	
 
 	<script>
 		// setup the map
-		const map = L.map('map',{center:[0,0],zoom: 2,});
-		const marker = L.marker([0, 0]).addTo(map);
+		const mymap = L.map('map',{center:[0,0],zoom: 2});
+		const marker = L.marker([0, 0]).addTo(mymap);
 
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 			attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -46,14 +45,13 @@
 			tileSize: 512,
 			zoomOffset: -1,
 			accessToken: 'pk.eyJ1Ijoic3Vubnl3b25nd3MiLCJhIjoiY2wzZHM3ejZwMGJqNDNtcHJzbjg3enRkNCJ9.xxoXiVlJOXyoSr1QFQ0gFg'
-		}).addTo(map);
+		}).addTo(mymap);
 
 		const status = document.querySelector('#status');
 		const mapLink = document.querySelector('#map-link');
-		const heading = document.querySelector('#heading');
 
 		function success(position) {
-			// console.log(position)
+			console.log(position)
 			const latitude  = position.coords.latitude;
 			const longitude = position.coords.longitude;
 			const heading = position.coords.heading;
@@ -62,10 +60,9 @@
 			// mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
 			mapLink.href = `https://www.google.com/maps/place/${latitude},${longitude}`;
 			mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
-			heading.textContent = 'Heading: ${heading}';
 
 			marker.setLatLng([latitude, longitude]);
-			map.setView([latitude, longitude], 18);
+			mymap.setView([latitude, longitude], 18);
 
 			}
 
@@ -99,7 +96,7 @@
 		}
 
 		// keep watching the location
-		const watchID = undefined;
+		var watchID;
 
 		function startWatch(){
 			if (!watchID){
