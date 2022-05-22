@@ -17,13 +17,13 @@
 		}
 		html, body, #map{
  	   		height: 70vh;
-    		width: 80vw;
+    		width: 98vw;
 		}
 	</style>
 </head>
 <body>
 	
-	<a href="index.html">back to HOME</a>
+	<!--<a href="index.html">back to HOME</a>-->
 	<h1>Where am I?</h1>
 	<button id="find-me">Show my location</button>
 	<button id="keep-watch">keep watching my location</button>
@@ -47,7 +47,7 @@
 			iconUrl: 'imges/psyduck.png',
 			iconSize:     [30, 30], // size of the icon
 			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
-			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+			popupAnchor:  [0, -18] // point from which the popup should open relative to the iconAnchor
 		});
 		var charmanderIcon = L.icon({
 			iconUrl: 'imges/charmander.png',
@@ -77,6 +77,8 @@
 
 		const status = document.querySelector('#status');
 		const mapLink = document.querySelector('#map-link');
+		let firsTime = true;
+		const text = 'Some text here about the place.';
 
 		function success(position) {
 			console.log(position)
@@ -90,10 +92,15 @@
 			mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
 
 			user.setLatLng([latitude, longitude]);
-			mymap.setView([latitude, longitude], 19);
+			if (firsTime){
+				mymap.flyTo([latitude, longitude], 19);
+				firsTime = false;
+			}
+			
 			const psyduck = L.marker([22.36175, 114.13281],{icon: psyduckIcon}).addTo(mymap);
 			const charmander = L.marker([22.3626, 114.13344],{icon: charmanderIcon}).addTo(mymap);
 			const snorlax = L.marker([22.36339, 114.13224],{icon: snorlaxIcon}).addTo(mymap);
+			psyduck.bindPopup(text);
 
 			}
 
