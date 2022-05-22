@@ -29,6 +29,12 @@
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
 	<p id = "status"></p>
+	<p>Latitude: <span id = "latitude">_____</span>°<br/>
+		Longitude: <span id = "longitude">_____</span>°<br/>
+		Heading: <span id = "heading"></span><br/>
+		Speed: <span id = "speed"></span><br/>
+	</p>
+
 	<a id = "map-link" target="_blank"></a><br/>
 	<div id="map"></div>
 	
@@ -81,15 +87,18 @@
 		const text = 'Some text here about the place.';
 
 		function success(position) {
-			console.log(position)
+			//console.log(position)
 			const latitude  = position.coords.latitude;
 			const longitude = position.coords.longitude;
-			const heading = position.coords.heading;
+			document.querySelector( '#heading' ).innerHTML = position.coords.heading;
+			document.querySelector( '#latitude' ).innerHTML = position.coords.latitude; 
+			document.querySelector( '#longitude' ).innerHTML = position.coords.longitude; 
+			document.querySelector( '#speed' ).innerHTML = position.coords.speed;
 
 			status.textContent = '';
 			// mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
 			mapLink.href = `https://www.google.com/maps/place/${latitude},${longitude}`;
-			mapLink.textContent = `Latitude: ${latitude} °, Longitude: ${longitude} °`;
+			mapLink.textContent = `see it on google map`;
 
 			user.setLatLng([latitude, longitude]);
 			if (firsTime){
