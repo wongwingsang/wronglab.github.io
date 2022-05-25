@@ -19,6 +19,13 @@
  	   		height: 70vh;
     		width: 98vw;
 		}
+		#arrow {
+			border: solid black;
+			border-width: 0 3px 3px 0;
+			display: inline-block;
+			padding: 10px;
+			transform: rotate(-135deg);
+		}
 	</style>
 </head>
 <body>
@@ -28,15 +35,15 @@
 	<button id="find-me">Show my location</button>
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
+	<button id="toR">+1 deg</button>
+	<button id="toL">-1 deg</button>
+	
 	<p id = "status"></p>
-	<p>Latitude: <span id = "latitude">_____</span>°<br/>
-		Longitude: <span id = "longitude">_____</span>°<br/>
+	<p>Latitude: <span id = "latitude">_____</span>° | Longitude: <span id = "longitude">_____</span>°<br/>
 		Heading: <span id = "heading"></span><br/>
-		Speed: <span id = "speed"></span><br/>
-		Time: <span id="time"></span>
 	</p>
-
 	<a id = "map-link" target="_blank"></a><br/>
+	<p><i id="arrow"></i></p> 
 	<div id="map"></div>
 	
 
@@ -87,16 +94,26 @@
 		let firsTime = true;
 		const text = 'Some text here about the place.';
 
+		let deg = 0;
+		function toL(){
+			deg--;
+			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+deg) +'deg)';
+		}
+		function toR(){
+			deg++;
+			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+deg) +'deg)';
+		}
+
 		function success(position) {
 			//console.log(position)
 			const latitude  = position.coords.latitude;
 			const longitude = position.coords.longitude;
-			document.querySelector( '#heading' ).innerHTML = position.coords.heading;
-			document.querySelector( '#latitude' ).innerHTML = position.coords.latitude; 
-			document.querySelector( '#longitude' ).innerHTML = position.coords.longitude; 
-			document.querySelector( '#speed' ).innerHTML = position.coords.speed;
-			document.querySelector( '#time' ).innerHTML = position.timestamp;
-
+			const heading = Math.round(position.coords.heading);
+			
+			document.querySelector( '#heading' ).innerHTML = heading;
+			document.querySelector( '#latitude' ).innerHTML = latitude.toFixed(2); 
+			document.querySelector( '#longitude' ).innerHTML = longitude.toFixed(2); 
+			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 
 			status.textContent = '';
 			// mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
@@ -173,6 +190,8 @@
 		document.querySelector('#find-me').addEventListener('click', geoFindMe);
 		document.querySelector('#keep-watch').addEventListener('click', startWatch);
 		document.querySelector('#stop-watch').addEventListener('click', stopWatch);
+		document.querySelector('#toL').addEventListener('click', toL);
+		document.querySelector('#toR').addEventListener('click', toR);
 
 	</script>
 </body>
