@@ -33,7 +33,7 @@
 	
 	<!--<a href="index.html">back to HOME</a>
 	<h1>Where am I?</h1>-->
-	<button id="find-me">Show my location</button>
+	<button id="find-me">where am I</button>
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
 	
@@ -87,7 +87,7 @@
 		}).addTo(mymap);
 
 		const status = document.querySelector('#status');
-		// let firsTime = true;
+		let firsTime = true;
 
 		function success(position) {
 			const latitude  = position.coords.latitude;
@@ -99,23 +99,20 @@
 			document.querySelector( '#longitude' ).innerHTML = longitude.toFixed(2); 
 			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 
-			status.textContent = '';
 			const places = L.layerGroup([psyduck,charmander,snorlax]).addTo(mymap);
 
 			const user = L.marker([latitude, longitude],{icon: pikachuIcon}).addTo(mymap);
-			mymap.flyTo([latitude, longitude], 18);
 
-			/*if (firsTime){
+			if (firsTime){
 				mymap.flyTo([latitude, longitude], 18);
 				firsTime = false;
-			}*/
+			}
 
 			//check the distance of two points
 			const toPsyduck = user.getLatLng().distanceTo(psyduck.getLatLng());
 			//console.log('Distance to Psyduck: '+(toPsyduck.toFixed(2)) + ' m');
 			document.querySelector( '#toPsyduck' ).innerHTML = 'Distance to Psyduck: '+(toPsyduck.toFixed(2)) + ' m';
 			psyduck.bindPopup('This is Psyduck. '+(toPsyduck.toFixed(2)) + ' m away.');
-
 
 		}
 
@@ -142,7 +139,8 @@
 			if(!navigator.geolocation) {
 				status.textContent = 'Geolocation is not supported by your browser';
 			} else {
-				status.textContent = 'Locating…';
+				status.textContent = '';
+				firsTime = true;
 				navigator.geolocation.getCurrentPosition(success, error, options);
 			}
 		}
@@ -155,17 +153,19 @@
 				if(!navigator.geolocation) {
 					status.textContent = 'Geolocation is not supported by your browser';
 				} else {
-					status.textContent = 'Locating…';
+					status.textContent = 'watching you location...';
 					watchID = navigator.geolocation.watchPosition(success, error, options);
 				}
 			}
 		}
 
 		function stopWatch(){
-			status.textContent = '';
+			status.textContent = 'stoped';
 			navigator.geolocation.clearWatch(watchID);
 			watchID = undefined;
 		}
+
+		
 
 		document.querySelector('#find-me').addEventListener('click', geoFindMe);
 		document.querySelector('#keep-watch').addEventListener('click', startWatch);
