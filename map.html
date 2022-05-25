@@ -33,6 +33,7 @@
 		Longitude: <span id = "longitude">_____</span>°<br/>
 		Heading: <span id = "heading"></span><br/>
 		Speed: <span id = "speed"></span><br/>
+		Time: <span id="time"></span>
 	</p>
 
 	<a id = "map-link" target="_blank"></a><br/>
@@ -41,7 +42,7 @@
 
 	<script>
 		// setup the map
-		const mymap = L.map('map',{center:[22.40000, 114.13000],zoom: 11,minZoom:11});
+		const mymap = L.map('map',{center:[22.40000, 114.13000],zoom: 11,minZoom:11,zoomControl: false});
 		
 		var pikachuIcon = L.icon({
 			iconUrl: 'imges/pikachu.png',
@@ -94,6 +95,8 @@
 			document.querySelector( '#latitude' ).innerHTML = position.coords.latitude; 
 			document.querySelector( '#longitude' ).innerHTML = position.coords.longitude; 
 			document.querySelector( '#speed' ).innerHTML = position.coords.speed;
+			document.querySelector( '#time' ).innerHTML = position.timestamp;
+
 
 			status.textContent = '';
 			// mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
@@ -101,10 +104,11 @@
 			mapLink.textContent = `see it on google map`;
 
 			user.setLatLng([latitude, longitude]);
-			if (firsTime){
+			mymap.flyTo([latitude, longitude], 19);
+			/*if (firsTime){
 				mymap.flyTo([latitude, longitude], 19);
 				firsTime = false;
-			}
+			}*/
 			
 			const psyduck = L.marker([22.36175, 114.13281],{icon: psyduckIcon}).addTo(mymap);
 			const charmander = L.marker([22.3626, 114.13344],{icon: charmanderIcon}).addTo(mymap);
@@ -127,6 +131,10 @@
 			}
 		}
 
+		var options = {
+			enableHighAccuracy: true
+		};
+
 		// show the location once
 		function geoFindMe() {
 
@@ -137,7 +145,7 @@
 				status.textContent = 'Geolocation is not supported by your browser';
 			} else {
 				status.textContent = 'Locating…';
-				navigator.geolocation.getCurrentPosition(success, error);
+				navigator.geolocation.getCurrentPosition(success, error, options);
 			}
 
 		}
