@@ -44,6 +44,7 @@
 	<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p> 
 	<p><span id="toPsyduck"></span></p>
 	<div id="map"></div>
+	<audio src="audio/Unlock.wav" id="unlock" controls style="display: none;"></audio>
 	
 
 	<script>
@@ -106,6 +107,7 @@
 
 			if (firsTime){
 				mymap.flyTo([latitude, longitude], 18);
+				document.getElementById("unlock").play();
 				firsTime = false;
 			}
 
@@ -143,6 +145,7 @@
 				status.textContent = '';
 				firsTime = true;
 				navigator.geolocation.getCurrentPosition(success, error, options);
+				
 			}
 		}
 
@@ -165,8 +168,6 @@
 			navigator.geolocation.clearWatch(watchID);
 			watchID = undefined;
 		}
-
-		
 
 		document.querySelector('#find-me').addEventListener('click', geoFindMe);
 		document.querySelector('#keep-watch').addEventListener('click', startWatch);
