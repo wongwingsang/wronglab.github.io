@@ -24,6 +24,7 @@
 			border-width: 0 3px 3px 0;
 			display: inline-block;
 			padding: 10px;
+			margin: 10px;
 			transform: rotate(-135deg);
 		}
 	</style>
@@ -35,14 +36,11 @@
 	<button id="find-me">Show my location</button>
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
-	<button id="toR">+1 deg</button>
-	<button id="toL">-1 deg</button>
 	
 	<p id = "status"></p>
-	<p>Latitude: <span id = "latitude">_____</span>° | Longitude: <span id = "longitude">_____</span>°<br/>
+	<p>Latitude: <span id = "latitude">_____</span>° | Longitude: <span id = "longitude">_____</span>° | 
 		Heading: <span id = "heading"></span><br/>
 	</p>
-	<a id = "map-link" target="_blank"></a><br/>
 	<p><i id="arrow"></i></p> 
 	<div id="map"></div>
 	
@@ -51,25 +49,25 @@
 		// setup the map
 		const mymap = L.map('map',{center:[22.40000, 114.13000],zoom: 11,minZoom:11,zoomControl: false});
 		
-		var pikachuIcon = L.icon({
+		const pikachuIcon = L.icon({
 			iconUrl: 'imges/pikachu.png',
 			iconSize:     [30, 30], // size of the icon
 			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
 			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-		var psyduckIcon = L.icon({
+		const psyduckIcon = L.icon({
 			iconUrl: 'imges/psyduck.png',
 			iconSize:     [30, 30], // size of the icon
 			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
 			popupAnchor:  [0, -18] // point from which the popup should open relative to the iconAnchor
 		});
-		var charmanderIcon = L.icon({
+		const charmanderIcon = L.icon({
 			iconUrl: 'imges/charmander.png',
 			iconSize:     [30, 30], // size of the icon
 			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
 			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-		var snorlaxIcon = L.icon({
+		const snorlaxIcon = L.icon({
 			iconUrl: 'imges/snorlax.png',
 			iconSize:     [30, 30], // size of the icon
 			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
@@ -90,19 +88,9 @@
 		}).addTo(mymap);
 
 		const status = document.querySelector('#status');
-		const mapLink = document.querySelector('#map-link');
-		let firsTime = true;
+		// let firsTime = true;
 		const text = 'Some text here about the place.';
 
-		let deg = 0;
-		function toL(){
-			deg--;
-			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+deg) +'deg)';
-		}
-		function toR(){
-			deg++;
-			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+deg) +'deg)';
-		}
 
 		function success(position) {
 			//console.log(position)
@@ -116,9 +104,6 @@
 			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 
 			status.textContent = '';
-			// mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-			mapLink.href = `https://www.google.com/maps/place/${latitude},${longitude}`;
-			mapLink.textContent = `see it on google map`;
 
 			user.setLatLng([latitude, longitude]);
 			mymap.flyTo([latitude, longitude], 19);
@@ -154,17 +139,12 @@
 
 		// show the location once
 		function geoFindMe() {
-
-			mapLink.href = '';
-			mapLink.textContent = '';
-
 			if(!navigator.geolocation) {
 				status.textContent = 'Geolocation is not supported by your browser';
 			} else {
 				status.textContent = 'Locating…';
 				navigator.geolocation.getCurrentPosition(success, error, options);
 			}
-
 		}
 
 		// keep watching the location
@@ -176,7 +156,7 @@
 					status.textContent = 'Geolocation is not supported by your browser';
 				} else {
 					status.textContent = 'Locating…';
-					watchID = navigator.geolocation.watchPosition(success, error);
+					watchID = navigator.geolocation.watchPosition(success, error, options);
 				}
 			}
 		}
@@ -190,8 +170,6 @@
 		document.querySelector('#find-me').addEventListener('click', geoFindMe);
 		document.querySelector('#keep-watch').addEventListener('click', startWatch);
 		document.querySelector('#stop-watch').addEventListener('click', stopWatch);
-		document.querySelector('#toL').addEventListener('click', toL);
-		document.querySelector('#toR').addEventListener('click', toR);
 
 	</script>
 </body>
