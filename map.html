@@ -24,58 +24,57 @@
 			border-width: 0 3px 3px 0;
 			display: inline-block;
 			padding: 10px;
-			margin: 10px;
+			margin-left: 50px;
 			transform: rotate(-135deg);
 		}
 	</style>
 </head>
 <body>
 	
-	<!--<a href="index.html">back to HOME</a>-->
-	<h1>Where am I?</h1>
+	<!--<a href="index.html">back to HOME</a>
+	<h1>Where am I?</h1>-->
 	<button id="find-me">Show my location</button>
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
 	
 	<p id = "status"></p>
-	<p>Latitude: <span id = "latitude">_____</span>° | Longitude: <span id = "longitude">_____</span>° | 
-		Heading: <span id = "heading"></span><br/>
+	<p>Latitude: <span id = "latitude">_____</span>°<br/>
+		Longitude: <span id = "longitude">_____</span>°<br/> 
 	</p>
-	<p><i id="arrow"></i></p> 
+	<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p> 
+	<p><span id="toPsyduck"></span></p>
 	<div id="map"></div>
 	
 
 	<script>
-		// setup the map
-		const mymap = L.map('map',{center:[22.40000, 114.13000],zoom: 11,minZoom:11,zoomControl: false});
-		
+
+		// setup all icon
 		const pikachuIcon = L.icon({
 			iconUrl: 'imges/pikachu.png',
 			iconSize:     [30, 30], // size of the icon
 			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
-			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-		});
-		const psyduckIcon = L.icon({
-			iconUrl: 'imges/psyduck.png',
-			iconSize:     [30, 30], // size of the icon
-			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
 			popupAnchor:  [0, -18] // point from which the popup should open relative to the iconAnchor
 		});
-		const charmanderIcon = L.icon({
-			iconUrl: 'imges/charmander.png',
-			iconSize:     [30, 30], // size of the icon
-			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
-			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-		});
-		const snorlaxIcon = L.icon({
-			iconUrl: 'imges/snorlax.png',
-			iconSize:     [30, 30], // size of the icon
-			iconAnchor:   [15, 18], // point of the icon which will correspond to marker's location
-			popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-		});
+		const psyduckIcon = L.icon({
+			iconUrl: 'imges/psyduck.png',iconSize:[30, 30], 
+			iconAnchor:[15, 18], popupAnchor:[0, -18] });
 
-		const user = L.marker([22.40000, 114.13000],{icon: pikachuIcon}).addTo(mymap);
-		
+		const charmanderIcon = L.icon({iconUrl: 'imges/charmander.png',iconSize:[30, 30], 
+			iconAnchor:[15, 18], popupAnchor:[0, -18] });
+
+		const snorlaxIcon = L.icon({
+			iconUrl: 'imges/snorlax.png',iconSize:[30, 30], 
+			iconAnchor:[15, 18], popupAnchor:[0, -18] });
+
+		const psyduck = L.marker([22.36175, 114.13281],{icon: psyduckIcon}).bindPopup('This is Psyduck.'),
+			charmander = L.marker([22.3626, 114.13344],{icon: charmanderIcon}).bindPopup('This is Charmander.'),
+			snorlax = L.marker([22.36339, 114.13224],{icon: snorlaxIcon}).bindPopup('This is Snorlax.');
+
+		// setup the map
+		const mymap = L.map('map',{
+			center:[22.40000, 114.13000],
+			zoom: 11,minZoom:11,zoomControl: false,
+		});
 
 		//https://api.mapbox.com/styles/v1/sunnywongws/cl3dxr94u000p14o2ywsmaj7t/wmts?access_token=pk.eyJ1Ijoic3Vubnl3b25nd3MiLCJhIjoiY2wzZHMxNXFrMDN2OTNibWszaWp4MWx2MiJ9.6avIlC_w3PH1x5OIzjyn9A
 		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -89,11 +88,8 @@
 
 		const status = document.querySelector('#status');
 		// let firsTime = true;
-		const text = 'Some text here about the place.';
-
 
 		function success(position) {
-			//console.log(position)
 			const latitude  = position.coords.latitude;
 			const longitude = position.coords.longitude;
 			const heading = Math.round(position.coords.heading);
@@ -104,20 +100,24 @@
 			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 
 			status.textContent = '';
+			const places = L.layerGroup([psyduck,charmander,snorlax]).addTo(mymap);
 
-			user.setLatLng([latitude, longitude]);
-			mymap.flyTo([latitude, longitude], 19);
+			const user = L.marker([latitude, longitude],{icon: pikachuIcon}).addTo(mymap);
+			mymap.flyTo([latitude, longitude], 18);
+
 			/*if (firsTime){
-				mymap.flyTo([latitude, longitude], 19);
+				mymap.flyTo([latitude, longitude], 18);
 				firsTime = false;
 			}*/
-			
-			const psyduck = L.marker([22.36175, 114.13281],{icon: psyduckIcon}).addTo(mymap);
-			const charmander = L.marker([22.3626, 114.13344],{icon: charmanderIcon}).addTo(mymap);
-			const snorlax = L.marker([22.36339, 114.13224],{icon: snorlaxIcon}).addTo(mymap);
-			psyduck.bindPopup(text);
 
-			}
+			//check the distance of two points
+			const toPsyduck = user.getLatLng().distanceTo(psyduck.getLatLng());
+			//console.log('Distance to Psyduck: '+(toPsyduck.toFixed(2)) + ' m');
+			document.querySelector( '#toPsyduck' ).innerHTML = 'Distance to Psyduck: '+(toPsyduck.toFixed(2)) + ' m';
+			psyduck.bindPopup('This is Psyduck. '+(toPsyduck.toFixed(2)) + ' m away.');
+
+
+		}
 
 		function error(error) {
 			status.textContent = 'Unable to retrieve your location';
