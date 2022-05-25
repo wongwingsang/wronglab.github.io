@@ -86,6 +86,8 @@
 			accessToken: 'pk.eyJ1Ijoic3Vubnl3b25nd3MiLCJhIjoiY2wzZHM3ejZwMGJqNDNtcHJzbjg3enRkNCJ9.xxoXiVlJOXyoSr1QFQ0gFg'
 		}).addTo(mymap);
 
+		const user = L.marker([22.40000, 114.13000],{icon: pikachuIcon}).addTo(mymap);
+
 		const status = document.querySelector('#status');
 		let firsTime = true;
 
@@ -99,9 +101,8 @@
 			document.querySelector( '#longitude' ).innerHTML = longitude.toFixed(2); 
 			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 
+			user.setLatLng([latitude, longitude]);
 			const places = L.layerGroup([psyduck,charmander,snorlax]).addTo(mymap);
-
-			const user = L.marker([latitude, longitude],{icon: pikachuIcon}).addTo(mymap);
 
 			if (firsTime){
 				mymap.flyTo([latitude, longitude], 18);
