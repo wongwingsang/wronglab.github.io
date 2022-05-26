@@ -12,7 +12,7 @@
 		crossorigin=""></script>
 	<style>
 		body,p{
-			padding: 1%;
+			padding: 0;
 			margin: 0;
 		}
 		html, body, #map{
@@ -24,33 +24,37 @@
 			border-width: 0 3px 3px 0;
 			display: inline-block;
 			padding: 10px;
-			margin-left: 50px;
+			margin-left: 40%;
 			transform: rotate(-135deg);
+		}
+		input[type="checkbox"],button,P {
+			margin: 10px;
 		}
 	</style>
 </head>
 <body>
-	
-	<!--<a href="index.html">back to HOME</a>
-	<h1>Where am I?</h1>-->
+	<div id="map"></div>
 	<button id="find-me">where am I</button>
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
-	
-	
+	<div>
+		<input type="checkbox" name="center-checkbox" id="center-me" onclick="centerMe()">
+		<label for="center-me">keep me center</label>
+	</div>
+
+	<p><span id="alpha"></span><i id="arrow"></i></p>
 	<p id = "status"></p>
 	<p>Latitude: <span id = "latitude">_____</span>°<br/>
-		Longitude: <span id = "longitude">_____</span>°<br/> 
+		Longitude: <span id = "longitude">_____</span>°<br/>
+		<span id="toPsyduck"></span><br/>
 	</p>
 	<!--<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p>-->
-	<p><span id="toPsyduck"></span></p>
-	<p><i id="arrow"></i></p>
-	<p><span id="alpha"></span></p>
+	
 	<!--<p><span id="beta"></span></p>
 	<p><span id="gamma"></span></p>
 	<p><span id="absolute"></span></p>-->
 
-	<div id="map"></div>
+	
 	<audio src="audio/Unlock.wav" id="unlock" controls style="display: none;"></audio>
 	
 
@@ -98,6 +102,7 @@
 
 		const status = document.querySelector('#status');
 		let firsTime = true;
+		let keepMeCenter = false;
 
 		function success(position) {
 			const latitude  = position.coords.latitude;
@@ -118,12 +123,15 @@
 				firsTime = false;
 			}
 
+			if (keepMeCenter){
+				mymap.panTo([latitude, longitude]);
+			}
+
 			//check the distance of two points
 			const toPsyduck = user.getLatLng().distanceTo(psyduck.getLatLng());
 			//console.log('Distance to Psyduck: '+(toPsyduck.toFixed(2)) + ' m');
 			document.querySelector( '#toPsyduck' ).innerHTML = 'Distance to Psyduck: '+(toPsyduck.toFixed(2)) + ' m';
 			psyduck.bindPopup('This is Psyduck. '+(toPsyduck.toFixed(2)) + ' m away.');
-
 		}
 
 		function error(error) {
@@ -140,9 +148,7 @@
 			}
 		}
 
-		var options = {
-			enableHighAccuracy: true
-		};
+		var options = {enableHighAccuracy: true};
 
 		// show the location once
 		function geoFindMe() {
@@ -158,7 +164,6 @@
 
 		// keep watching the location
 		var watchID;
-
 		function startWatch(){
 			if (!watchID){
 				if(!navigator.geolocation) {
@@ -181,7 +186,7 @@
 		document.querySelector('#stop-watch').addEventListener('click', stopWatch);
 
 		
-
+		//find orientation of the user
 		function handleOrientation(event) {
 			//var absolute = event.absolute;
 			var alpha    = event.alpha;
@@ -198,18 +203,22 @@
 		}
 
 		if (window.DeviceOrientationEvent) {
-			window.addEventListener("deviceorientation", handleOrientation, true);
+			window.addEventListener("deviceorientation", handleOrientation, false);
 		}else{
-			alert('deviceorientation not supported')
+			status.textContent = 'deviceorientation not supported';
 		}
 
-		/*function reset(){
-			window.addEventListener("compassneedscalibration", function(event) {
-				alert('您的罗盘需要校准,请将设备沿数字8方向移动。');
-				event.preventDefault();
-			}, true);	
+		//keep user at the center of the map
+		function centerMe(){
+			const checkBox = document.getElementById("center-me");
+			if (checkBox.checked == true){
+				keepMeCenter = true;
+				navigator.geolocation.getCurrentPosition(success, error, options);
+			} else {
+				keepMeCenter = false;
+			}
 		}
-		document.querySelector('#reset').addEventListener('click', reset);*/
+
 
 
 	</script>
