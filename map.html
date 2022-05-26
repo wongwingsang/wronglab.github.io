@@ -41,13 +41,13 @@
 	<p>Latitude: <span id = "latitude">_____</span>°<br/>
 		Longitude: <span id = "longitude">_____</span>°<br/> 
 	</p>
-	<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p> 
+	<!--<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p> -->
 	<p><span id="toPsyduck"></span></p>
 
-	<p><span id="absolute"></span></p>
-	<p><span id="alpha"></span></p>
-	<p><span id="beta"></span></p>
+	<p><span id="alpha"></span><i id="arrow"></i></p>
+	<!--<p><span id="beta"></span></p>
 	<p><span id="gamma"></span></p>
+	<p><span id="absolute"></span></p>-->
 
 	<div id="map"></div>
 	<audio src="audio/Unlock.wav" id="unlock" controls style="display: none;"></audio>
@@ -101,12 +101,12 @@
 		function success(position) {
 			const latitude  = position.coords.latitude;
 			const longitude = position.coords.longitude;
-			const heading = Math.round(position.coords.heading);
+			//const heading = Math.round(position.coords.heading);
 			
 			document.querySelector( '#heading' ).innerHTML = heading;
 			document.querySelector( '#latitude' ).innerHTML = latitude.toFixed(2); 
 			document.querySelector( '#longitude' ).innerHTML = longitude.toFixed(2); 
-			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
+			//document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 
 			user.setLatLng([latitude, longitude]);
 			const places = L.layerGroup([psyduck,charmander,snorlax]).addTo(mymap);
@@ -184,14 +184,16 @@
 		function handleOrientation(event) {
 			var absolute = event.absolute;
 			var alpha    = event.alpha;
-			var beta     = event.beta;
-			var gamma    = event.gamma;
+			//var beta     = event.beta;
+			//var gamma    = event.gamma;
+			const heading = Math.round(alpha);
 
-			// Do stuff with the new orientation data
 			document.querySelector( '#absolute' ).innerHTML = 'absolute: '+absolute;
 			document.querySelector( '#alpha' ).innerHTML = 'alpha: '+ alpha;
-			document.querySelector( '#beta' ).innerHTML = 'beta: '+ beta;
-			document.querySelector( '#gamma' ).innerHTML = 'gamma: '+ gamma;
+			//document.querySelector( '#beta' ).innerHTML = 'beta: '+ beta;
+			//document.querySelector( '#gamma' ).innerHTML = 'gamma: '+ gamma;
+
+			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 		}
 
 		window.addEventListener("deviceorientation", handleOrientation, true);
