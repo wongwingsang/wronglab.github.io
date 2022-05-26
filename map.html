@@ -41,12 +41,12 @@
 		<input type="checkbox" name="center-checkbox" id="center-me" onclick="centerMe()">
 		<label for="center-me">keep me center</label>
 	</div>
-
-	<p><span id="alpha"></span><i id="arrow"></i></p>
+	<p><i id="arrow"></i></p>
+	<p><span id="alpha"></span></p>
 	<p id = "status"></p>
-	<p>Latitude: <span id = "latitude">_____</span>°<br/>
+	<p><span id="toPsyduck"></span><br/>
+		Latitude: <span id = "latitude">_____</span>°<br/>
 		Longitude: <span id = "longitude">_____</span>°<br/>
-		<span id="toPsyduck"></span><br/>
 	</p>
 	<!--<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p>-->
 	
@@ -189,13 +189,13 @@
 		//find orientation of the user
 		function handleOrientation(event) {
 			//var absolute = event.absolute;
-			var alpha    = event.alpha;
+			//var alpha    = event.alpha;
 			//var beta     = event.beta;
 			//var gamma    = event.gamma;
-			const heading = Math.round(alpha);
+			const heading = Math.round(event.alpha);
 
 			//document.querySelector( '#absolute' ).innerHTML = 'absolute: '+absolute;
-			document.querySelector( '#alpha' ).innerHTML = 'alpha: '+ alpha;
+			document.querySelector( '#alpha' ).innerHTML = 'alpha: '+ heading;
 			//document.querySelector( '#beta' ).innerHTML = 'beta: '+ beta;
 			//document.querySelector( '#gamma' ).innerHTML = 'gamma: '+ gamma;
 
