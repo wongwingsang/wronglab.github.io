@@ -43,6 +43,12 @@
 	</p>
 	<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p> 
 	<p><span id="toPsyduck"></span></p>
+
+	<p><span id="absolute"></span></p>
+	<p><span id="alpha"></span></p>
+	<p><span id="beta"></span></p>
+	<p><span id="gamma"></span></p>
+
 	<div id="map"></div>
 	<audio src="audio/Unlock.wav" id="unlock" controls style="display: none;"></audio>
 	
@@ -172,6 +178,24 @@
 		document.querySelector('#find-me').addEventListener('click', geoFindMe);
 		document.querySelector('#keep-watch').addEventListener('click', startWatch);
 		document.querySelector('#stop-watch').addEventListener('click', stopWatch);
+
+		
+
+		function handleOrientation(event) {
+			var absolute = event.absolute;
+			var alpha    = event.alpha;
+			var beta     = event.beta;
+			var gamma    = event.gamma;
+
+			// Do stuff with the new orientation data
+			document.querySelector( '#absolute' ).innerHTML = 'absolute: '+absolute;
+			document.querySelector( '#alpha' ).innerHTML = 'alpha: '+ alpha;
+			document.querySelector( '#beta' ).innerHTML = 'beta: '+ beta;
+			document.querySelector( '#gamma' ).innerHTML = 'gamma: '+ gamma;
+		}
+
+		window.addEventListener("deviceorientation", handleOrientation, true);
+
 
 	</script>
 </body>
