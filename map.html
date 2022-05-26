@@ -41,10 +41,10 @@
 	<p>Latitude: <span id = "latitude">_____</span>°<br/>
 		Longitude: <span id = "longitude">_____</span>°<br/> 
 	</p>
-	<!--<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p> -->
+	<!--<p>Heading: <span id = "heading">_____</span> deg<i id="arrow"></i></p>-->
 	<p><span id="toPsyduck"></span></p>
-
-	<p><span id="alpha"></span><i id="arrow"></i></p>
+	<p><i id="arrow"></i></p>
+	<p><span id="alpha"></span></p>
 	<!--<p><span id="beta"></span></p>
 	<p><span id="gamma"></span></p>
 	<p><span id="absolute"></span></p>-->
@@ -103,7 +103,7 @@
 			const longitude = position.coords.longitude;
 			//const heading = Math.round(position.coords.heading);
 			
-			document.querySelector( '#heading' ).innerHTML = heading;
+			//document.querySelector( '#heading' ).innerHTML = heading;
 			document.querySelector( '#latitude' ).innerHTML = latitude.toFixed(2); 
 			document.querySelector( '#longitude' ).innerHTML = longitude.toFixed(2); 
 			//document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
@@ -182,13 +182,13 @@
 		
 
 		function handleOrientation(event) {
-			var absolute = event.absolute;
+			//var absolute = event.absolute;
 			var alpha    = event.alpha;
 			//var beta     = event.beta;
 			//var gamma    = event.gamma;
 			const heading = Math.round(alpha);
 
-			document.querySelector( '#absolute' ).innerHTML = 'absolute: '+absolute;
+			//document.querySelector( '#absolute' ).innerHTML = 'absolute: '+absolute;
 			document.querySelector( '#alpha' ).innerHTML = 'alpha: '+ alpha;
 			//document.querySelector( '#beta' ).innerHTML = 'beta: '+ beta;
 			//document.querySelector( '#gamma' ).innerHTML = 'gamma: '+ gamma;
