@@ -36,6 +36,7 @@
 	<button id="find-me">where am I</button>
 	<button id="keep-watch">keep watching my location</button>
 	<button id="stop-watch">stop watching</button>
+	<button id="reset">reset</button>
 	
 	<p id = "status"></p>
 	<p>Latitude: <span id = "latitude">_____</span>°<br/>
@@ -196,7 +197,19 @@
 			document.querySelector( '#arrow' ).style.transform = 'rotate('+ (-135+heading) +'deg)';
 		}
 
-		window.addEventListener("deviceorientation", handleOrientation, true);
+		if (window.DeviceOrientationEvent) {
+			window.addEventListener("deviceorientation", handleOrientation, true);
+		}else{
+			alert('deviceorientation not supported')
+		}
+
+		function reset(){
+			window.addEventListener("compassneedscalibration", function(event) {
+				alert('您的罗盘需要校准,请将设备沿数字8方向移动。');
+				event.preventDefault();
+			}, true);	
+		}
+		document.querySelector('#reset').addEventListener('click', reset);
 
 
 	</script>
