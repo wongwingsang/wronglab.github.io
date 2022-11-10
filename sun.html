@@ -8,15 +8,15 @@
 </head>
 
 <body>
- 	<h1>hello</h1>
 
+	<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
+	<video id="video" width=100% height=100% autoplay></video>
+	<h1>
+		Manhattan Beach, CA
+	</h1>
 
-	 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-	 <video id="video"></video>
-
-	 <script>
+	<script>
 	   if(Hls.isSupported()) {
 		 var video = document.getElementById('video');
 		 var hls = new Hls();
@@ -35,7 +35,7 @@
 		   video.play();
 		 });
 	   }
-	 </script>
+	</script>
 
 
 </body>
